@@ -27,6 +27,11 @@ export default function Header() {
   }, [location.pathname])
 
   useEffect(() => {
+    document.body.classList.toggle('nav-open', mobileOpen)
+    return () => document.body.classList.remove('nav-open')
+  }, [mobileOpen])
+
+  useEffect(() => {
     const onDoc = (event: MouseEvent) => {
       if (!rootRef.current?.contains(event.target as Node)) {
         setOpen(null)
@@ -109,6 +114,30 @@ export default function Header() {
                     {item.label}
                     <ChevronDown />
                   </button>
+                  {isOpen && item.columns ? (
+                    <div className="mobile-submenu">
+                      {item.columns.map((column) => (
+                        <div className="mobile-submenu-col" key={column.title}>
+                          <p className="mega-heading">{column.title}</p>
+                          <ul>
+                            {column.links.map((link) => (
+                              <li key={link.label}>
+                                <Link to={link.to} onClick={closeMenus}>
+                                  {link.label}
+                                </Link>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      ))}
+                      {item.featured ? (
+                        <Link to={item.featured.to} className="mobile-submenu-feature" onClick={closeMenus}>
+                          <strong>{item.featured.title}</strong>
+                          <span>{item.featured.cta}</span>
+                        </Link>
+                      ) : null}
+                    </div>
+                  ) : null}
                 </div>
               )
             })}

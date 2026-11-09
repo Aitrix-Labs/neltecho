@@ -15,6 +15,7 @@ import {
   services,
   solutionPages,
 } from '../data'
+import FormSelect from '../components/FormSelect'
 import { ArrowRight } from '../components/Icons'
 
 function PageHero({
@@ -851,12 +852,17 @@ function DemoForm() {
       </label>
       <label>
         What are you most interested in?
-        <select name="interest" defaultValue="platform">
-          <option value="platform">Full platform demo</option>
-          <option value="endpoint">Endpoint security</option>
-          <option value="cloud">Cloud security</option>
-          <option value="soc">Autonomous SOC</option>
-        </select>
+        <FormSelect
+          name="interest"
+          defaultValue="platform"
+          aria-label="What are you most interested in?"
+          options={[
+            { value: 'platform', label: 'Full platform demo' },
+            { value: 'endpoint', label: 'Endpoint security' },
+            { value: 'cloud', label: 'Cloud security' },
+            { value: 'soc', label: 'Autonomous SOC' },
+          ]}
+        />
       </label>
       <button type="submit" className="btn btn-purple">
         Request Demo
